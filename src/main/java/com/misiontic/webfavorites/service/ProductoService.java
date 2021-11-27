@@ -2,15 +2,20 @@ package com.misiontic.webfavorites.service;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.misiontic.webfavorites.entity.Producto;
+import com.misiontic.webfavorites.exceptions.GeneralServiceException;
+import com.misiontic.webfavorites.exceptions.NoDataFoundException;
+import com.misiontic.webfavorites.exceptions.ValidateServiceException;
 import com.misiontic.webfavorites.repository.ProductoRepository;
 import com.misiontic.webfavorites.validators.ProductoValidator;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class ProductoService {
 
@@ -18,45 +23,77 @@ public class ProductoService {
 	private ProductoRepository produRepo;
 
 	public List<Producto> findAll() {
-		List<Producto> productos = produRepo.findAll();
-		return productos;
+		try {
+			List<Producto> productos = produRepo.findAll();
+			return productos;
+		} catch (NoDataFoundException | ValidateServiceException e) {
+			log.info(e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new GeneralServiceException(e.getMessage(), e);
+		}
 	}
 
 	public Producto findById(Long idProducto) {
-		Producto producto = produRepo.findById(idProducto)
-				.orElseThrow(() -> new RuntimeException("El producto no existe."));
-		return producto;
+		try {
+			Producto producto = produRepo.findById(idProducto)
+					.orElseThrow(() -> new NoDataFoundException("El producto no existe."));
+			return producto;
+		} catch (NoDataFoundException | ValidateServiceException e) {
+			log.info(e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new GeneralServiceException(e.getMessage(), e);
+		}
 	}
 
 	@Transactional
 	public void delete(Long idProducto) {
-		Producto producto = produRepo.findById(idProducto)
-				.orElseThrow(() -> new RuntimeException("El producto no existe."));
-		produRepo.delete(producto);
+		try {
+			Producto producto = produRepo.findById(idProducto)
+					.orElseThrow(() -> new NoDataFoundException("El producto no existe."));
+			produRepo.delete(producto);
+		} catch (NoDataFoundException | ValidateServiceException e) {
+			log.info(e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new GeneralServiceException(e.getMessage(), e);
+		}
 	}
 
 	@Transactional
 	public Producto save(Producto producto) {
-		ProductoValidator.save(producto);
+		try {
+			ProductoValidator.save(producto);
 
-		if (producto.getIdProducto() == null) {
-			Producto productoN = produRepo.save(producto);
-			return productoN;
+			if (producto.getIdProducto() == null) {
+				Producto productoN = produRepo.save(producto);
+				return productoN;
+			}
+
+			Producto productoUp = produRepo.findById(producto.getIdProducto())
+					.orElseThrow(() -> new NoDataFoundException("El producto no existe."));
+
+			productoUp.setIdUsuario(producto.getIdUsuario());
+			productoUp.setIdCategoria(producto.getIdCategoria());
+			productoUp.setNombre(producto.getNombre());
+			productoUp.setCantidad(producto.getCantidad());
+			productoUp.setDescripcion(producto.getDescripcion());
+			productoUp.setImagen(producto.getImagen());
+			productoUp.setFechacreacion(producto.getFechacreacion());
+
+			produRepo.save(productoUp);
+
+			return productoUp;
+		} catch (NoDataFoundException | ValidateServiceException e) {
+			log.info(e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new GeneralServiceException(e.getMessage(), e);
 		}
-		
-		Producto productoUp = produRepo.findById(producto.getIdProducto())
-				.orElseThrow(() -> new RuntimeException("El producto no existe."));
-		
-		productoUp.setIdUsuario(producto.getIdUsuario());
-		productoUp.setIdCategoria(producto.getIdCategoria());
-		productoUp.setNombre(producto.getNombre());
-		productoUp.setCantidad(producto.getCantidad());
-		productoUp.setDescripcion(producto.getDescripcion());
-		productoUp.setImagen(producto.getImagen());
-		productoUp.setFechaCreacion(producto.getFechaCreacion());
-		
-		produRepo.save(productoUp);
-		
-		return productoUp;
 	}
 }

@@ -12,9 +12,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PermisoDTO {
-	
+
 	private Long idPermiso;
 	private String nombre;
 	private String ruta;
-	
+	private String iconos;
+
 }

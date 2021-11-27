@@ -7,48 +7,88 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.misiontic.webfavorites.entity.Favorito;
+import com.misiontic.webfavorites.exceptions.GeneralServiceException;
+import com.misiontic.webfavorites.exceptions.NoDataFoundException;
+import com.misiontic.webfavorites.exceptions.ValidateServiceException;
 import com.misiontic.webfavorites.repository.FavoritoRepository;
 import com.misiontic.webfavorites.validators.FavoritoValidator;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class FavoritoService {
 
 	@Autowired
 	private FavoritoRepository favRepo;
 
-	public List<Favorito> findAll(){
-		List<Favorito> favoritos = favRepo.findAll();
-		return favoritos;
+	public List<Favorito> findAll() {
+		try {
+			List<Favorito> favoritos = favRepo.findAll();
+			return favoritos;
+		} catch (NoDataFoundException | ValidateServiceException e) {
+			log.info(e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new GeneralServiceException(e.getMessage(), e);
+		}
 	}
-	
+
 	public Favorito findById(Long idFavorito) {
-		Favorito favorito = favRepo.findById(idFavorito).orElseThrow(() -> new RuntimeException("No existe el Producto"));
-		return favorito;
+		try {
+			Favorito favorito = favRepo.findById(idFavorito)
+					.orElseThrow(() -> new NoDataFoundException("No existe el Producto"));
+			return favorito;
+		} catch (NoDataFoundException | ValidateServiceException e) {
+			log.info(e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new GeneralServiceException(e.getMessage(), e);
+		}
 	}
-	
+
 	@Transactional
 	public void delete(Long idFavorito) {
-		Favorito favorito = favRepo.findById(idFavorito).orElseThrow(() -> new RuntimeException("No existe el Producto"));
-		favRepo.delete(favorito);
-	}
-	
-	@Transactional
-	public Favorito save (Favorito favorito) {
-		FavoritoValidator.save(favorito);
-		
-		if(favorito.getIdFavorito() == null) {
-			Favorito favoritoN = favRepo.save(favorito);
-			return favoritoN;
+		try {
+			Favorito favorito = favRepo.findById(idFavorito)
+					.orElseThrow(() -> new NoDataFoundException("No existe el Producto"));
+			favRepo.delete(favorito);
+		} catch (NoDataFoundException | ValidateServiceException e) {
+			log.info(e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new GeneralServiceException(e.getMessage(), e);
 		}
-		
-		Favorito favoritoUp = favRepo.findById(favorito.getIdFavorito()).orElseThrow(() -> new RuntimeException("No existe el Producto"));
-		
-		favoritoUp.setIdCliente(favorito.getIdCliente());
-		favoritoUp.setIdUsuario(favorito.getIdUsuario());
-		favoritoUp.setFechaAgregado(favorito.getFechaAgregado());
-		
-		favRepo.save(favoritoUp);
-		return favoritoUp;
+	}
+
+	@Transactional
+	public Favorito save(Favorito favorito) {
+		try {
+			FavoritoValidator.save(favorito);
+
+			if (favorito.getIdFavorito() == null) {
+				Favorito favoritoN = favRepo.save(favorito);
+				return favoritoN;
+			}
+
+			Favorito favoritoUp = favRepo.findById(favorito.getIdFavorito())
+					.orElseThrow(() -> new NoDataFoundException("No existe el Producto"));
+
+			favoritoUp.setIdCliente(favorito.getIdCliente());
+			favoritoUp.setIdUsuario(favorito.getIdUsuario());
+			favoritoUp.setFecha(favorito.getFecha());
+
+			favRepo.save(favoritoUp);
+			return favoritoUp;
+		} catch (NoDataFoundException | ValidateServiceException e) {
+			log.info(e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new GeneralServiceException(e.getMessage(), e);
+		}
 	}
 }
-

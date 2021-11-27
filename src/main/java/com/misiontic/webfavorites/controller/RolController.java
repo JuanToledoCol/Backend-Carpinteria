@@ -17,6 +17,7 @@ import com.misiontic.webfavorites.converters.RolConv;
 import com.misiontic.webfavorites.dtos.RolDTO;
 import com.misiontic.webfavorites.entity.Rol;
 import com.misiontic.webfavorites.service.RolService;
+import com.misiontic.webfavorites.utils.WrapperResponse;
 
 @RestController
 public class RolController {
@@ -26,36 +27,36 @@ public class RolController {
 	private RolConv converter = new RolConv();
 
 	@GetMapping(value = "/rol")
-	public ResponseEntity<List<RolDTO>> findAll() {
+	public ResponseEntity<WrapperResponse<List<RolDTO>>> findAll() {
 		List<Rol> roles = rolServi.findAll();
 		List<RolDTO> rolDto = converter.toDTO(roles);
-		return new ResponseEntity<>(rolDto, HttpStatus.OK);
+		return new WrapperResponse<>(true, "Completo", rolDto).createResponse(HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/rol/{idRol}")
-	public ResponseEntity<RolDTO> findById(@PathVariable("idRol") Long idRol) {
+	public ResponseEntity<WrapperResponse<RolDTO>> findById(@PathVariable("idRol") Long idRol) {
 		Rol rol = rolServi.findById(idRol);
 		RolDTO rolDto = converter.toDTO(rol);
-		return new ResponseEntity<RolDTO>(rolDto, HttpStatus.OK);
+		return new WrapperResponse<>(true, "Completo", rolDto).createResponse(HttpStatus.OK);
 	}
 
 	@DeleteMapping(value = "/rol/{idRol}")
-	public ResponseEntity<Void> delete(@PathVariable("idRol") Long idRol) {
+	public ResponseEntity<?> delete(@PathVariable("idRol") Long idRol) {
 		rolServi.delete(idRol);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		return new WrapperResponse<>(true, "Completo", null).createResponse(HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/rol")
-	public ResponseEntity<RolDTO> create(@RequestBody RolDTO rol) {
+	public ResponseEntity<WrapperResponse<RolDTO>> create(@RequestBody RolDTO rol) {
 		Rol rolN = rolServi.save(converter.toEntity(rol));
 		RolDTO rolDto = converter.toDTO(rolN);
-		return new ResponseEntity<RolDTO>(rolDto, HttpStatus.CREATED);
+		return new WrapperResponse<>(true, "Completo", rolDto).createResponse(HttpStatus.CREATED);
 	}
 
 	@PutMapping(value = "/rol")
-	public ResponseEntity<RolDTO> udpate(@RequestBody RolDTO rol) {
+	public ResponseEntity<WrapperResponse<RolDTO>> udpate(@RequestBody RolDTO rol) {
 		Rol rolUP = rolServi.save(converter.toEntity(rol));
 		RolDTO rolDto = converter.toDTO(rolUP);
-		return new ResponseEntity<RolDTO>(rolDto, HttpStatus.CREATED);
+		return new WrapperResponse<>(true, "Completo", rolDto).createResponse(HttpStatus.OK);
 	}
 }

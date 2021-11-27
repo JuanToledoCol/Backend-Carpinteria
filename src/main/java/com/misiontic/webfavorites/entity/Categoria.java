@@ -1,6 +1,8 @@
- package com.misiontic.webfavorites.entity;
+package com.misiontic.webfavorites.entity;
 
- import javax.persistence.Column;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,24 +12,31 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
- import lombok.NoArgsConstructor;
- import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
- @Builder
- @Getter
- @Setter
- @NoArgsConstructor
- @AllArgsConstructor
- @Entity
- @Table(name = "categorias")
-public class Categoria {
 
-	 @Id
-	 @GeneratedValue(strategy = GenerationType.IDENTITY)
-	 @Column(name = "idcategoria")
-	 private Long idCategoria;
-	 
-	 @Column(name = "nombre", length = 200, nullable = false)
-	 private String nombre;
-	 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "categorias")
+public class Categoria{
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idcategoria")
+    private Long idCategoria;
+    
+	@Basic(optional = false)
+    @Column(name = "nombre", nullable = false, length = 200)
+	private String nombre;
+	
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idCategoria")
+    //private List<Producto> listaProductos;
+
+    
 }

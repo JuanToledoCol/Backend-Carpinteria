@@ -15,7 +15,7 @@ public class ProductoConv extends AbstracConverter<Producto, ProductoDTO>{
 				.cantidad(dto.getCantidad())
 				.descripcion(dto.getDescripcion())
 				.imagen(dto.getImagen())
-				.fechaCreacion(dto.getFechaCreacion())
+				.fechacreacion(dto.getFechaCreacion())
 				.build();
 	}
 
@@ -29,7 +29,7 @@ public class ProductoConv extends AbstracConverter<Producto, ProductoDTO>{
 				.cantidad(entity.getCantidad())
 				.descripcion(entity.getDescripcion())
 				.imagen(entity.getImagen())
-				.fechaCreacion(entity.getFechaCreacion())
+				.fechaCreacion(entity.getFechacreacion())
 				.build();
 	}
 

@@ -1,3 +1,4 @@
+
 package com.misiontic.webfavorites.controller;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import com.misiontic.webfavorites.converters.FavoritoConv;
 import com.misiontic.webfavorites.dtos.FavoritoDTO;
 import com.misiontic.webfavorites.entity.Favorito;
 import com.misiontic.webfavorites.service.FavoritoService;
+import com.misiontic.webfavorites.utils.WrapperResponse;
 
 @RestController
 public class FavoritoController {
@@ -26,37 +28,37 @@ public class FavoritoController {
 	private FavoritoConv converter = new FavoritoConv();
 
 	@GetMapping(value = "/favorito")
-	public ResponseEntity<List<FavoritoDTO>> findAll() {
+	public ResponseEntity<WrapperResponse<List<FavoritoDTO>>> findAll() {
 		List<Favorito> favoritos = favService.findAll();
 		List<FavoritoDTO> favoritosDto = converter.toDTO(favoritos);
-		return new ResponseEntity<List<FavoritoDTO>>(favoritosDto, HttpStatus.OK);
+		return new WrapperResponse<>(true, "Completo", favoritosDto).createResponse(HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/favorito/{idFavorito}")
-	public ResponseEntity<FavoritoDTO> findById(@PathVariable("idFavorito") Long idFavorito) {
+	public ResponseEntity<WrapperResponse<FavoritoDTO>> findById(@PathVariable("idFavorito") Long idFavorito) {
 		Favorito favorito = favService.findById(idFavorito);
 		FavoritoDTO favoritoDto = converter.toDTO(favorito);
-		return new ResponseEntity<FavoritoDTO>(favoritoDto, HttpStatus.OK);
+		return new WrapperResponse<>(true, "Completo", favoritoDto).createResponse(HttpStatus.OK);
 	}
 
 	@DeleteMapping(value = "/favorito/{idFavorito}")
-	public ResponseEntity<Void> delete(@PathVariable("idFavorito") Long idFavorito) {
+	public ResponseEntity<?> delete(@PathVariable("idFavorito") Long idFavorito) {
 		favService.delete(idFavorito);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new WrapperResponse<>(true, "Completo", null).createResponse(HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/favorito")
-	public ResponseEntity<FavoritoDTO> create(@RequestBody FavoritoDTO favorito) {
+	public ResponseEntity<WrapperResponse<FavoritoDTO>> create(@RequestBody FavoritoDTO favorito) {
 		Favorito favoritoN = favService.save(converter.toEntity(favorito));
 		FavoritoDTO favoritoDto = converter.toDTO(favoritoN);
-		return new ResponseEntity<FavoritoDTO>(favoritoDto, HttpStatus.CREATED);
+		return new WrapperResponse<>(true, "Completo", favoritoDto).createResponse(HttpStatus.CREATED);
 	}
 
 	@PutMapping(value = "/favorito")
-	public ResponseEntity<FavoritoDTO> update(@RequestBody FavoritoDTO favorito) {
+	public ResponseEntity<WrapperResponse<FavoritoDTO>> update(@RequestBody FavoritoDTO favorito) {
 		Favorito favoritoUp = favService.save(converter.toEntity(favorito));
 		FavoritoDTO favoritoDto = converter.toDTO(favoritoUp);
-		return new ResponseEntity<FavoritoDTO>(favoritoDto, HttpStatus.OK);
+		return new WrapperResponse<>(true, "Completo", favoritoDto).createResponse(HttpStatus.OK);
 	}
 
 }

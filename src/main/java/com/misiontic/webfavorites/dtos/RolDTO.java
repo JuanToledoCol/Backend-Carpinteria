@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class RolDTO {
-	
+
 	private Long idRol;
 	private String nombre;
 }

@@ -1,6 +1,9 @@
 package com.misiontic.webfavorites.dtos;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
+import com.misiontic.webfavorites.entity.Categoria;
+import com.misiontic.webfavorites.entity.Usuario;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -12,11 +15,11 @@ import lombok.Setter;
 public class ProductoDTO {
 
 	private Long idProducto;
-	private Long idUsuario;
-	private Long idCategoria;
+	private Usuario idUsuario;
+	private Categoria idCategoria;
 	private String nombre;
 	private Long cantidad;
 	private String descripcion;
 	private String imagen;
-	private LocalDateTime fechaCreacion;
+	private LocalDate fechaCreacion;
 }

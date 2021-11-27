@@ -17,6 +17,7 @@ import com.misiontic.webfavorites.converters.CategoriaConv;
 import com.misiontic.webfavorites.dtos.CategoriaDTO;
 import com.misiontic.webfavorites.entity.Categoria;
 import com.misiontic.webfavorites.service.CategoriaService;
+import com.misiontic.webfavorites.utils.WrapperResponse;
 
 @RestController
 public class CategoriaController {
@@ -26,39 +27,39 @@ public class CategoriaController {
 	private CategoriaConv converter = new CategoriaConv();
 
 	@GetMapping(value ="/categoria")
-	public ResponseEntity<List<CategoriaDTO>> findAll(){
+	public ResponseEntity<WrapperResponse<List<CategoriaDTO>>> findAll(){
 		List<Categoria> categorias = cateService.findAll();
 		List<CategoriaDTO> categoriasDto = converter.toDTO(categorias);
-		return new ResponseEntity<List<CategoriaDTO>>(categoriasDto, HttpStatus.OK);
+		return new WrapperResponse<>(true, "Completo", categoriasDto).createResponse(HttpStatus.OK);
 	}
-	
+
 	@GetMapping(value = "/categoria/{idCategoria}")
-	public ResponseEntity<CategoriaDTO> findById(@PathVariable("idCategoria") Long idCategoria){
+	public ResponseEntity<WrapperResponse<CategoriaDTO>> findById(@PathVariable("idCategoria") Long idCategoria){
 		Categoria categoria = cateService.findById(idCategoria);
 		CategoriaDTO categoriaDto = converter.toDTO(categoria);
-		return new ResponseEntity<CategoriaDTO>(categoriaDto, HttpStatus.OK);
+		return new WrapperResponse<>(true, "Completo", categoriaDto).createResponse(HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping(value = "/categoria/{idCategoria}")
-	public ResponseEntity<Void> delete(@PathVariable("idCategoria") Long idCategoria){
+	public ResponseEntity<?> delete(@PathVariable("idCategoria") Long idCategoria){
 		cateService.delete(idCategoria);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		return new WrapperResponse<>(true, "Completo", null).createResponse(HttpStatus.OK);
 	}
-	
+
 	@PostMapping(value = "/categoria")
-	public ResponseEntity<CategoriaDTO> create(@RequestBody CategoriaDTO categoria){
+	public ResponseEntity<WrapperResponse<CategoriaDTO>> create(@RequestBody CategoriaDTO categoria){
 		Categoria categoriaN = cateService.save(converter.toEntity(categoria));
 		CategoriaDTO categoriaDto = converter.toDTO(categoriaN);
-		return new ResponseEntity<CategoriaDTO>(categoriaDto, HttpStatus.CREATED);
+		return new WrapperResponse<>(true, "Completo", categoriaDto).createResponse(HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping(value = "/categoria")
-	public ResponseEntity<CategoriaDTO> update(@RequestBody CategoriaDTO categoria){
+	public ResponseEntity<WrapperResponse<CategoriaDTO>> update(@RequestBody CategoriaDTO categoria){
 		Categoria categoriaUp = cateService.save(converter.toEntity(categoria));
 		CategoriaDTO categoriaDto = converter.toDTO(categoriaUp);
-		return new ResponseEntity<CategoriaDTO>(categoriaDto, HttpStatus.CREATED);
+		return new WrapperResponse<>(true, "Completo", categoriaDto).createResponse(HttpStatus.OK);
 	}
-	
-	
-	
+
+
+
 }

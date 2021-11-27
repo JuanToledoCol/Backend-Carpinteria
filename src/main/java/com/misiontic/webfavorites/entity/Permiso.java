@@ -13,24 +13,30 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Builder
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "permisos")
-public class Permiso {
+public class Permiso{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idpermiso")
-	private Long idPermiso;
-	
-	@Column(name = "nombre", length = 200, nullable = false)
-	private String nombre;
-	
-	@Column(name = "ruta", length = 200, nullable = false)
-	private String ruta;
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idpermiso")
+    private Long idPermiso;
+    
+    @Column(name = "nombre", nullable = false, length = 200)
+    private String nombre;
+    
+    @Column(name = "ruta", nullable = false, length = 100)
+    private String ruta;
+    
+    @Column(name = "iconos", nullable = false, length = 100)
+    private String iconos;
+    
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idPermiso")
+    //private List<RelUsuarioPermiso> listaRelUsuarioPermiso;
+    
 }

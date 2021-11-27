@@ -13,7 +13,7 @@ public class RolConv extends AbstracConverter<Rol, RolDTO>{
 	@Override
 	public RolDTO toDTO(Rol entity) {
 		return RolDTO.builder().idRol(entity.getIdRol()).nombre(entity.getNombre()).build();
-	
+
 	}
 
 }

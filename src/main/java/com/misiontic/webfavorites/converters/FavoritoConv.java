@@ -11,7 +11,7 @@ public class FavoritoConv extends AbstracConverter<Favorito, FavoritoDTO>{
 				.idFavorito(dto.getIdFavorito())
 				.idCliente(dto.getIdCliente())
 				.idUsuario(dto.getIdUsuario())
-				.fechaAgregado(dto.getFechaAgregado())
+				.fecha(dto.getFecha())
 				.build();
 	}
 
@@ -21,7 +21,7 @@ public class FavoritoConv extends AbstracConverter<Favorito, FavoritoDTO>{
 		.idFavorito(entity.getIdFavorito())
 		.idCliente(entity.getIdCliente())
 		.idUsuario(entity.getIdUsuario())
-		.fechaAgregado(entity.getFechaAgregado())
+		.fecha(entity.getFecha())
 		.build();
 	}
 

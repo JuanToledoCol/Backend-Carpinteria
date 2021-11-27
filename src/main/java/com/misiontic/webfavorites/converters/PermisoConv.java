@@ -11,6 +11,7 @@ public class PermisoConv extends AbstracConverter<Permiso, PermisoDTO>{
 				.idPermiso(dto.getIdPermiso())
 				.nombre(dto.getNombre())
 				.ruta(dto.getRuta())
+				.iconos(dto.getIconos())
 				.build();
 	}
 
@@ -20,6 +21,7 @@ public class PermisoConv extends AbstracConverter<Permiso, PermisoDTO>{
 				.idPermiso(entity.getIdPermiso())
 				.nombre(entity.getNombre())
 				.ruta(entity.getRuta())
+				.iconos(entity.getIconos())
 				.build();
 	}
 

@@ -17,6 +17,7 @@ import com.misiontic.webfavorites.converters.PermisoConv;
 import com.misiontic.webfavorites.dtos.PermisoDTO;
 import com.misiontic.webfavorites.entity.Permiso;
 import com.misiontic.webfavorites.service.PermisoService;
+import com.misiontic.webfavorites.utils.WrapperResponse;
 
 @RestController
 public class PermisoController {
@@ -26,36 +27,36 @@ public class PermisoController {
 	private PermisoConv converter = new PermisoConv();
 
 	@GetMapping(value = "/permiso")
-	public ResponseEntity<List<PermisoDTO>> findAll() {
+	public ResponseEntity<WrapperResponse<List<PermisoDTO>>> findAll() {
 		List<Permiso> permisos = permisoService.findAll();
 		List<PermisoDTO> permisosDto = converter.toDTO(permisos);
-		return new ResponseEntity<List<PermisoDTO>>(permisosDto, HttpStatus.OK);
+		return new WrapperResponse<>(true, "Completo", permisosDto).createResponse(HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/permiso/{idPermiso}")
-	public ResponseEntity<PermisoDTO> findById(@PathVariable("idPermiso") Long idPermiso) {
+	public ResponseEntity<WrapperResponse<PermisoDTO>> findById(@PathVariable("idPermiso") Long idPermiso) {
 		Permiso permiso = permisoService.findById(idPermiso);
 		PermisoDTO permisoDto = converter.toDTO(permiso);
-		return new ResponseEntity<PermisoDTO>(permisoDto, HttpStatus.OK);
+		return new WrapperResponse<>(true, "Completo", permisoDto).createResponse(HttpStatus.OK);
 	}
 
 	@DeleteMapping(value = "/permiso/{idPermiso}")
-	public ResponseEntity<Void> delete(@PathVariable("idPermiso") Long idPermiso) {
+	public ResponseEntity<?> delete(@PathVariable("idPermiso") Long idPermiso) {
 		permisoService.delete(idPermiso);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		return new WrapperResponse<>(true, "Completo", null).createResponse(HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/permiso")
-	public ResponseEntity<PermisoDTO> create(@RequestBody PermisoDTO permiso) {
+	public ResponseEntity<WrapperResponse<PermisoDTO>> create(@RequestBody PermisoDTO permiso) {
 		Permiso permisoN = permisoService.save(converter.toEntity(permiso));
 		PermisoDTO permisoDto = converter.toDTO(permisoN);
-		return new ResponseEntity<PermisoDTO>(permisoDto, HttpStatus.CREATED);
+		return new WrapperResponse<>(true, "Completo", permisoDto).createResponse(HttpStatus.CREATED);
 	}
 
 	@PutMapping(value = "/permiso")
-	public ResponseEntity<PermisoDTO> update(@RequestBody PermisoDTO permiso) {
+	public ResponseEntity<WrapperResponse<PermisoDTO>> update(@RequestBody PermisoDTO permiso) {
 		Permiso permisoUp = permisoService.save(converter.toEntity(permiso));
 		PermisoDTO permisoDto = converter.toDTO(permisoUp);
-		return new ResponseEntity<PermisoDTO>(permisoDto, HttpStatus.CREATED);
+		return new WrapperResponse<>(true, "Completo", permisoDto).createResponse(HttpStatus.OK);
 	}
 }

@@ -1,6 +1,8 @@
 package com.misiontic.webfavorites.dtos;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
+import com.misiontic.webfavorites.entity.Usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +18,7 @@ import lombok.Setter;
 public class FavoritoDTO {
 
 	private Long idFavorito;
-	private Long idUsuario;
-	private Long idCliente;
-	private LocalDateTime fechaAgregado;
+	private Usuario idUsuario;
+	private Usuario idCliente;
+	private LocalDate fecha;
 }
