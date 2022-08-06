@@ -6,26 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sena.webfavorites.entity.Rol;
+import com.sena.webfavorites.entity.TelefonoUsuario;
 import com.sena.webfavorites.exceptions.GeneralServiceException;
 import com.sena.webfavorites.exceptions.NoDataFoundException;
 import com.sena.webfavorites.exceptions.ValidateServiceException;
-import com.sena.webfavorites.repository.RolRepository;
-import com.sena.webfavorites.validators.RolValidator;
+import com.sena.webfavorites.repository.TelefonoUsuarioRepository;
+import com.sena.webfavorites.validators.TelefonoUsuarioValidator;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class RolService {
+public class TelefonoUsuarioService {
 
 	@Autowired
-	private RolRepository rolRepo;
+	private TelefonoUsuarioRepository telRepo;
 
-	public List<Rol> findAll() {
+	public List<TelefonoUsuario> findAll() {
 		try {
-			List<Rol> roles = rolRepo.findAll();
-			return roles;
+			List<TelefonoUsuario> tel = telRepo.findAll();
+			return tel;
 		} catch (NoDataFoundException | ValidateServiceException e) {
 			log.info(e.getMessage(), e);
 			throw e;
@@ -35,24 +35,11 @@ public class RolService {
 		}
 	}
 
-	public Rol findById(Long idRol) {
+	public TelefonoUsuario findById(Long idTelefono) {
 		try {
-			Rol rol = rolRepo.findById(idRol).orElseThrow(() -> new NoDataFoundException("No existe ese Rol"));
-			return rol;
-		} catch (NoDataFoundException | ValidateServiceException e) {
-			log.info(e.getMessage(), e);
-			throw e;
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			throw new GeneralServiceException(e.getMessage(), e);
-		}
-	}
-
-	@Transactional
-	public void delete(Long idRol) {
-		try {
-			Rol rol = rolRepo.findById(idRol).orElseThrow(() -> new NoDataFoundException("No existe ese Rol"));
-			rolRepo.delete(rol);
+			TelefonoUsuario tel = telRepo.findById(idTelefono)
+					.orElseThrow(() -> new NoDataFoundException("El telefono no existe."));
+			return tel;
 		} catch (NoDataFoundException | ValidateServiceException e) {
 			log.info(e.getMessage(), e);
 			throw e;
@@ -63,23 +50,37 @@ public class RolService {
 	}
 
 	@Transactional
-	public Rol save(Rol rol) {
+	public void delete(Long idTelefono) {
 		try {
-			RolValidator.save(rol);
+			TelefonoUsuario tel = telRepo.findById(idTelefono)
+					.orElseThrow(() -> new NoDataFoundException("El Telefono no existe."));
+			telRepo.delete(tel);
+		} catch (NoDataFoundException | ValidateServiceException e) {
+			log.info(e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new GeneralServiceException(e.getMessage(), e);
+		}
+	}
 
-			if (rol.getIdRol() == null) {
-				Rol rolN = rolRepo.save(rol);
-				return rolN;
+	@Transactional
+	public TelefonoUsuario save(TelefonoUsuario tel) {
+		try {
+			TelefonoUsuarioValidator.save(tel);
+
+			if (tel.getIdTelUsuario() == null) {
+				TelefonoUsuario relN = telRepo.save(tel);
+				return relN;
 			}
 
-			Rol rolUp = rolRepo.findById(rol.getIdRol())
-					.orElseThrow(() -> new NoDataFoundException("No existe ese Rol"));
+			TelefonoUsuario telUp = telRepo.findById(tel.getIdTelUsuario())
+					.orElseThrow(() -> new NoDataFoundException("El telefono no existe."));
 
-			rolUp.setNombreRol(rol.getNombreRol());
+			telUp.setTelefono(tel.getTelefono());
+			telRepo.save(telUp);
 
-			rolRepo.save(rolUp);
-
-			return rolUp;
+			return telUp;
 		} catch (NoDataFoundException | ValidateServiceException e) {
 			log.info(e.getMessage(), e);
 			throw e;
@@ -88,4 +89,5 @@ public class RolService {
 			throw new GeneralServiceException(e.getMessage(), e);
 		}
 	}
+
 }

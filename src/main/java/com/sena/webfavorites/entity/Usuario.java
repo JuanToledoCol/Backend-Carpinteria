@@ -27,18 +27,22 @@ public class Usuario{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idusuario")
+    @Column(name = "idUsuario")
     private Long idUsuario;
 
-    @JoinColumn(name = "idrol", nullable = false, referencedColumnName = "idRol")
+    @JoinColumn(name = "idRol", nullable = false, referencedColumnName = "idRol")
     @ManyToOne(optional = false)
     private Rol idRol;
 
-    @Column(name = "nombre", nullable = false, length = 200)
-    private String nombre;
+    @JoinColumn(name = "idTipoDocumento", nullable = false, referencedColumnName = "idTipoDocumento")
+    @ManyToOne(optional = false)
+    private TiposDocumentos idTipoDocumento;
 
-    @Column(name = "apellido", nullable = false, length = 200)
-    private String apellido;
+    @Column(name = "nombreUsuario", nullable = false, length = 200)
+    private String nombreUsuario;
+
+    @Column(name = "apellidoUsuario", nullable = false, length = 200)
+    private String apellidoUsuario;
 
     @Column(name = "correo", nullable = false, length = 300)
     private String correo;
@@ -46,14 +50,17 @@ public class Usuario{
     @Column(name = "usuario", nullable = false, length = 40)
     private String usuario;
 
-    @Column(name = "pass", nullable = false, length = 100)
-    private String pass;
+    @Column(name = "clave", nullable = false, length = 100)
+    private String clave;
+
+    @Column(name = "numeroDocumento", nullable = false, length = 20)
+    private int numeroDocumento;
 
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    //private List<Favorito> listaFavoritosUsuarios;
+    //private List<Compra> listaFavoritosUsuarios;
 
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
-    //private List<Favorito> listaFavoritosClientes;
+    //private List<Compra> listaFavoritosClientes;
 
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     //private List<RelUsuarioPermiso> listaRelUsuariosPermisos;

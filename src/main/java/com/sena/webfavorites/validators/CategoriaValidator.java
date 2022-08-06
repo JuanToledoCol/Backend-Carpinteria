@@ -6,7 +6,7 @@ import com.sena.webfavorites.exceptions.ValidateServiceException;
 public class CategoriaValidator {
 
 	public static void save(Categoria categoria) {
-		if(categoria.getNombre().trim().isEmpty() || categoria.getNombre() == null) {
+		if(categoria.getNombreCategoria().trim().isEmpty() || categoria.getNombreCategoria() == null) {
 			throw new ValidateServiceException("El nombre no puede estar vacio");
 		}
 	}

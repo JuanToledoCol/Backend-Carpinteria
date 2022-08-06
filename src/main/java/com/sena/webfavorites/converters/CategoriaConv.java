@@ -7,12 +7,12 @@ public class CategoriaConv extends AbstracConverter<Categoria, CategoriaDTO> {
 
 	@Override
 	public Categoria toEntity(CategoriaDTO dto) {
-		return Categoria.builder().idCategoria(dto.getIdCategoria()).nombre(dto.getNombre()).build();
+		return Categoria.builder().idCategoria(dto.getIdCategoria()).nombreCategoria(dto.getNombreCategoria()).build();
 	}
 
 	@Override
 	public CategoriaDTO toDTO(Categoria entity) {
-		return CategoriaDTO.builder().idCategoria(entity.getIdCategoria()).nombre(entity.getNombre()).build();
+		return CategoriaDTO.builder().idCategoria(entity.getIdCategoria()).nombreCategoria(entity.getNombreCategoria()).build();
 	}
 
 }

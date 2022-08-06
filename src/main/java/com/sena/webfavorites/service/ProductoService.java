@@ -77,13 +77,12 @@ public class ProductoService {
 			Producto productoUp = produRepo.findById(producto.getIdProducto())
 					.orElseThrow(() -> new NoDataFoundException("El producto no existe."));
 
-			productoUp.setIdUsuario(producto.getIdUsuario());
 			productoUp.setIdCategoria(producto.getIdCategoria());
-			productoUp.setNombre(producto.getNombre());
-			productoUp.setCantidad(producto.getCantidad());
+			productoUp.setNombreProducto(producto.getNombreProducto());
+			productoUp.setStock(producto.getStock());
 			productoUp.setDescripcion(producto.getDescripcion());
-			productoUp.setImagen(producto.getImagen());
-			productoUp.setFechacreacion(producto.getFechacreacion());
+			productoUp.setPrecio(producto.getPrecio());
+			productoUp.setFechaCreacionProducto(producto.getFechaCreacionProducto());
 
 			produRepo.save(productoUp);
 

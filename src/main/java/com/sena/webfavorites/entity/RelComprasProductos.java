@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -20,25 +22,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "roles")
-public class Rol{
+@Table(name = "relComprasProductos")
+public class RelComprasProductos{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idRol")
-    private Long idRol;
+    @Column(name = "idRelCompraProducto")
+    private Long idRelCompraProducto;
 
-    @Basic(optional = false)
-    @Column(name = "nombreRol", nullable = false, length = 100)
-    private String nombreRol;
+    @JoinColumn(name = "idCompra", referencedColumnName = "idCompra")
+    @ManyToOne(optional = false)
+    private Compra idCompra;
 
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idRol")
-    //private List<Usuario> listaUsuarios;
+    @JoinColumn(name = "idProducto", referencedColumnName = "idProducto")
+    @ManyToOne(optional = false)
+    private Producto idProducto;
+
 }
-
-
-
-
-
-

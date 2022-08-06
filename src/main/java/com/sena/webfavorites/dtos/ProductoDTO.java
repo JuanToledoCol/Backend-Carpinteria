@@ -3,7 +3,6 @@ package com.sena.webfavorites.dtos;
 import java.time.LocalDate;
 
 import com.sena.webfavorites.entity.Categoria;
-import com.sena.webfavorites.entity.Usuario;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -15,11 +14,10 @@ import lombok.Setter;
 public class ProductoDTO {
 
 	private Long idProducto;
-	private Usuario idUsuario;
 	private Categoria idCategoria;
-	private String nombre;
-	private Long cantidad;
+	private String nombreProducto;
+	private int stock;
 	private String descripcion;
-	private String imagen;
-	private LocalDate fechaCreacion;
+	private Double precio ;
+	private LocalDate fechaCreacionProducto;
 }

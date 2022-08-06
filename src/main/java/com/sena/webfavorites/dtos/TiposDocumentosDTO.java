@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class RolDTO {
+public class TiposDocumentosDTO {
 
-	private Long idRol;
-	private String nombreRol;
+	private Long idTipoDocumento;
+	private String nombreTD;
 }

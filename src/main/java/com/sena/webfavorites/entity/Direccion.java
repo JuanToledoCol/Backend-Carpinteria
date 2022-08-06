@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -20,25 +22,19 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "roles")
-public class Rol{
+@Table(name = "direcciones")
+public class Direccion {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idRol")
-    private Long idRol;
+    @Column(name = "idDireccion")
+	private Long idDireccion;
 
-    @Basic(optional = false)
-    @Column(name = "nombreRol", nullable = false, length = 100)
-    private String nombreRol;
+	@Column(name = "direccion", nullable = false, length = 40)
+	private String direccion;
 
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idRol")
-    //private List<Usuario> listaUsuarios;
+	@JoinColumn(name = "idUsuario", nullable = false, referencedColumnName = "idUsuario")
+    @ManyToOne(optional = false)
+	private Usuario idUsuario;
 }
-
-
-
-
-
-

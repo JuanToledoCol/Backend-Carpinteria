@@ -27,15 +27,9 @@ public class Categoria{
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idcategoria")
+    @Column(name = "idCategoria")
     private Long idCategoria;
 
-	@Basic(optional = false)
-    @Column(name = "nombre", nullable = false, length = 200)
-	private String nombre;
-
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idCategoria")
-    //private List<Producto> listaProductos;
-
-
+    @Column(name = "nombreCategoria", nullable = false, length = 200)
+	private String nombreCategoria;
 }

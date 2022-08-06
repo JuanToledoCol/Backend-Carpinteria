@@ -6,26 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sena.webfavorites.entity.Rol;
+import com.sena.webfavorites.entity.Compra;
 import com.sena.webfavorites.exceptions.GeneralServiceException;
 import com.sena.webfavorites.exceptions.NoDataFoundException;
 import com.sena.webfavorites.exceptions.ValidateServiceException;
-import com.sena.webfavorites.repository.RolRepository;
-import com.sena.webfavorites.validators.RolValidator;
+import com.sena.webfavorites.repository.CompraRepository;
+import com.sena.webfavorites.validators.CompraValidator;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class RolService {
+public class CompraService {
 
 	@Autowired
-	private RolRepository rolRepo;
+	private CompraRepository compraRepo;
 
-	public List<Rol> findAll() {
+	public List<Compra> findAll() {
 		try {
-			List<Rol> roles = rolRepo.findAll();
-			return roles;
+			List<Compra> compra = compraRepo.findAll();
+			return compra;
 		} catch (NoDataFoundException | ValidateServiceException e) {
 			log.info(e.getMessage(), e);
 			throw e;
@@ -35,24 +35,11 @@ public class RolService {
 		}
 	}
 
-	public Rol findById(Long idRol) {
+	public Compra findById(Long idCompra) {
 		try {
-			Rol rol = rolRepo.findById(idRol).orElseThrow(() -> new NoDataFoundException("No existe ese Rol"));
-			return rol;
-		} catch (NoDataFoundException | ValidateServiceException e) {
-			log.info(e.getMessage(), e);
-			throw e;
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			throw new GeneralServiceException(e.getMessage(), e);
-		}
-	}
-
-	@Transactional
-	public void delete(Long idRol) {
-		try {
-			Rol rol = rolRepo.findById(idRol).orElseThrow(() -> new NoDataFoundException("No existe ese Rol"));
-			rolRepo.delete(rol);
+			Compra compra = compraRepo.findById(idCompra)
+					.orElseThrow(() -> new NoDataFoundException("No existe el Producto"));
+			return compra;
 		} catch (NoDataFoundException | ValidateServiceException e) {
 			log.info(e.getMessage(), e);
 			throw e;
@@ -63,23 +50,38 @@ public class RolService {
 	}
 
 	@Transactional
-	public Rol save(Rol rol) {
+	public void delete(Long idCompra) {
 		try {
-			RolValidator.save(rol);
+			Compra compra = compraRepo.findById(idCompra)
+					.orElseThrow(() -> new NoDataFoundException("No existe el Producto"));
+			compraRepo.delete(compra);
+		} catch (NoDataFoundException | ValidateServiceException e) {
+			log.info(e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new GeneralServiceException(e.getMessage(), e);
+		}
+	}
 
-			if (rol.getIdRol() == null) {
-				Rol rolN = rolRepo.save(rol);
-				return rolN;
+	@Transactional
+	public Compra save(Compra compra) {
+		try {
+			CompraValidator.save(compra);
+
+			if (compra.getIdCompra() == null) {
+				Compra compraN = compraRepo.save(compra);
+				return compraN;
 			}
 
-			Rol rolUp = rolRepo.findById(rol.getIdRol())
-					.orElseThrow(() -> new NoDataFoundException("No existe ese Rol"));
+			Compra compraUp = compraRepo.findById(compra.getIdCompra())
+					.orElseThrow(() -> new NoDataFoundException("No existe el Producto"));
 
-			rolUp.setNombreRol(rol.getNombreRol());
+			compraUp.setIdUsuario(compra.getIdUsuario());
+			compraUp.setFechaCompra(compra.getFechaCompra());
 
-			rolRepo.save(rolUp);
-
-			return rolUp;
+			compraRepo.save(compraUp);
+			return compraUp;
 		} catch (NoDataFoundException | ValidateServiceException e) {
 			log.info(e.getMessage(), e);
 			throw e;

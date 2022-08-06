@@ -6,26 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sena.webfavorites.entity.Rol;
+import com.sena.webfavorites.entity.Direccion;
 import com.sena.webfavorites.exceptions.GeneralServiceException;
 import com.sena.webfavorites.exceptions.NoDataFoundException;
 import com.sena.webfavorites.exceptions.ValidateServiceException;
-import com.sena.webfavorites.repository.RolRepository;
-import com.sena.webfavorites.validators.RolValidator;
+import com.sena.webfavorites.repository.DireccionRepository;
+import com.sena.webfavorites.validators.DireccionValidator;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class RolService {
+public class DireccionService {
 
 	@Autowired
-	private RolRepository rolRepo;
+	private DireccionRepository dirRepo;
 
-	public List<Rol> findAll() {
+	public List<Direccion> findAll() {
 		try {
-			List<Rol> roles = rolRepo.findAll();
-			return roles;
+			List<Direccion> dir = dirRepo.findAll();
+			return dir;
 		} catch (NoDataFoundException | ValidateServiceException e) {
 			log.info(e.getMessage(), e);
 			throw e;
@@ -35,24 +35,11 @@ public class RolService {
 		}
 	}
 
-	public Rol findById(Long idRol) {
+	public Direccion findById(Long direccion) {
 		try {
-			Rol rol = rolRepo.findById(idRol).orElseThrow(() -> new NoDataFoundException("No existe ese Rol"));
-			return rol;
-		} catch (NoDataFoundException | ValidateServiceException e) {
-			log.info(e.getMessage(), e);
-			throw e;
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			throw new GeneralServiceException(e.getMessage(), e);
-		}
-	}
-
-	@Transactional
-	public void delete(Long idRol) {
-		try {
-			Rol rol = rolRepo.findById(idRol).orElseThrow(() -> new NoDataFoundException("No existe ese Rol"));
-			rolRepo.delete(rol);
+			Direccion dir = dirRepo.findById(direccion)
+					.orElseThrow(() -> new NoDataFoundException("La Direccion no existe."));
+			return dir;
 		} catch (NoDataFoundException | ValidateServiceException e) {
 			log.info(e.getMessage(), e);
 			throw e;
@@ -63,23 +50,37 @@ public class RolService {
 	}
 
 	@Transactional
-	public Rol save(Rol rol) {
+	public void delete(Long direccion) {
 		try {
-			RolValidator.save(rol);
+			Direccion dir = dirRepo.findById(direccion)
+					.orElseThrow(() -> new NoDataFoundException("La Direccion no existe."));
+			dirRepo.delete(dir);
+		} catch (NoDataFoundException | ValidateServiceException e) {
+			log.info(e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new GeneralServiceException(e.getMessage(), e);
+		}
+	}
 
-			if (rol.getIdRol() == null) {
-				Rol rolN = rolRepo.save(rol);
-				return rolN;
+	@Transactional
+	public Direccion save(Direccion dir) {
+		try {
+			DireccionValidator.save(dir);
+
+			if (dir.getIdDireccion() == null) {
+				Direccion dirN = dirRepo.save(dir);
+				return dirN;
 			}
 
-			Rol rolUp = rolRepo.findById(rol.getIdRol())
-					.orElseThrow(() -> new NoDataFoundException("No existe ese Rol"));
+			Direccion dirUp = dirRepo.findById(dir.getIdDireccion())
+					.orElseThrow(() -> new NoDataFoundException("La Direccion no existe."));
 
-			rolUp.setNombreRol(rol.getNombreRol());
+			dirUp.setDireccion(dir.getDireccion());
+			dirRepo.save(dirUp);
 
-			rolRepo.save(rolUp);
-
-			return rolUp;
+			return dirUp;
 		} catch (NoDataFoundException | ValidateServiceException e) {
 			log.info(e.getMessage(), e);
 			throw e;
@@ -89,3 +90,4 @@ public class RolService {
 		}
 	}
 }
+

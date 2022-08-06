@@ -9,13 +9,12 @@ public class ProductoConv extends AbstracConverter<Producto, ProductoDTO>{
 	public Producto toEntity(ProductoDTO dto) {
 		return Producto.builder()
 				.idProducto(dto.getIdProducto())
-				.idUsuario(dto.getIdUsuario())
 				.idCategoria(dto.getIdCategoria())
-				.nombre(dto.getNombre())
-				.cantidad(dto.getCantidad())
+				.nombreProducto(dto.getNombreProducto())
+				.stock(dto.getStock())
 				.descripcion(dto.getDescripcion())
-				.imagen(dto.getImagen())
-				.fechacreacion(dto.getFechaCreacion())
+				.precio(dto.getPrecio())
+				.fechaCreacionProducto(dto.getFechaCreacionProducto())
 				.build();
 	}
 
@@ -23,13 +22,12 @@ public class ProductoConv extends AbstracConverter<Producto, ProductoDTO>{
 	public ProductoDTO toDTO(Producto entity) {
 		return ProductoDTO.builder()
 				.idProducto(entity.getIdProducto())
-				.idUsuario(entity.getIdUsuario())
 				.idCategoria(entity.getIdCategoria())
-				.nombre(entity.getNombre())
-				.cantidad(entity.getCantidad())
+				.nombreProducto(entity.getNombreProducto())
+				.stock(entity.getStock())
 				.descripcion(entity.getDescripcion())
-				.imagen(entity.getImagen())
-				.fechaCreacion(entity.getFechacreacion())
+				.precio(entity.getPrecio())
+				.fechaCreacionProducto(entity.getFechaCreacionProducto())
 				.build();
 	}
 

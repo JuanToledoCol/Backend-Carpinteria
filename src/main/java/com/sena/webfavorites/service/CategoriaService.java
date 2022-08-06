@@ -74,7 +74,7 @@ public class CategoriaService {
 
 			Categoria categoriaUp = cateRepo.findById(categoria.getIdCategoria()).orElseThrow(() -> new NoDataFoundException("La categoria no existe"));
 
-			categoriaUp.setNombre(categoria.getNombre());
+			categoriaUp.setNombreCategoria(categoria.getNombreCategoria());
 
 			cateRepo.save(categoriaUp);
 			return categoriaUp;

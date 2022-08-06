@@ -12,30 +12,30 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sena.webfavorites.converters.RelProductoFavoritoConv;
-import com.sena.webfavorites.dtos.RelProductoFavoritoDTO;
-import com.sena.webfavorites.entity.RelProductoFavorito;
-import com.sena.webfavorites.service.RelProductoFavoritoService;
+import com.sena.webfavorites.converters.RelCompraProductoConv;
+import com.sena.webfavorites.dtos.RelCompraProductoDTO;
+import com.sena.webfavorites.entity.RelComprasProductos;
+import com.sena.webfavorites.service.RelCompraProductoService;
 import com.sena.webfavorites.utils.WrapperResponse;
 
 @RestController
 public class RelProductoFavoritoController {
 
 	@Autowired
-	private RelProductoFavoritoService relService;
-	private RelProductoFavoritoConv converter = new RelProductoFavoritoConv();
+	private RelCompraProductoService relService;
+	private RelCompraProductoConv converter = new RelCompraProductoConv();
 
 	@GetMapping(value = "/relproducto")
-	public ResponseEntity<WrapperResponse<List<RelProductoFavoritoDTO>>> findAll() {
-		List<RelProductoFavorito> rel = relService.findAll();
-		List<RelProductoFavoritoDTO> relDto = converter.toDTO(rel);
+	public ResponseEntity<WrapperResponse<List<RelCompraProductoDTO>>> findAll() {
+		List<RelComprasProductos> rel = relService.findAll();
+		List<RelCompraProductoDTO> relDto = converter.toDTO(rel);
 		return new WrapperResponse<>(true, "Completado", relDto).createResponse(HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/relproducto/{idRel}")
-	public ResponseEntity<WrapperResponse<RelProductoFavoritoDTO>> findById(@PathVariable("idRel") Long idRel) {
-		RelProductoFavorito rel = relService.findById(idRel);
-		RelProductoFavoritoDTO relDto = converter.toDTO(rel);
+	public ResponseEntity<WrapperResponse<RelCompraProductoDTO>> findById(@PathVariable("idRel") Long idRel) {
+		RelComprasProductos rel = relService.findById(idRel);
+		RelCompraProductoDTO relDto = converter.toDTO(rel);
 		return new WrapperResponse<>(true, "Completado", relDto).createResponse(HttpStatus.OK);
 	}
 
@@ -46,9 +46,9 @@ public class RelProductoFavoritoController {
 	}
 
 	@PostMapping(value = "/relproducto")
-	public ResponseEntity<WrapperResponse<RelProductoFavoritoDTO>> create(@RequestBody RelProductoFavoritoDTO rel) {
-		RelProductoFavorito relN = relService.save(converter.toEntity(rel));
-		RelProductoFavoritoDTO productoDto = converter.toDTO(relN);
+	public ResponseEntity<WrapperResponse<RelCompraProductoDTO>> create(@RequestBody RelCompraProductoDTO rel) {
+		RelComprasProductos relN = relService.save(converter.toEntity(rel));
+		RelCompraProductoDTO productoDto = converter.toDTO(relN);
 		return new WrapperResponse<>(true, "Completado", productoDto).createResponse(HttpStatus.CREATED);
 	}
 }

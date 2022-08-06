@@ -75,11 +75,13 @@ public class UsuarioService {
 			Usuario usuarioUp = usuRepo.findById(usuario.getIdUsuario()).orElseThrow(() -> new NoDataFoundException("El usuario no existe"));
 
 			usuarioUp.setIdRol(usuario.getIdRol());
-			usuarioUp.setNombre(usuario.getNombre());
-			usuarioUp.setApellido(usuario.getApellido());
+			usuarioUp.setIdTipoDocumento(usuario.getIdTipoDocumento());
+			usuarioUp.setNombreUsuario(usuario.getNombreUsuario());
+			usuarioUp.setApellidoUsuario(usuario.getApellidoUsuario());
 			usuarioUp.setCorreo(usuario.getCorreo());
 			usuarioUp.setUsuario(usuario.getUsuario());
-			usuarioUp.setPass(usuario.getPass());
+			usuarioUp.setClave(usuario.getClave());
+			usuarioUp.setNumeroDocumento(usuario.getNumeroDocumento());
 
 			usuRepo.save(usuarioUp);
 

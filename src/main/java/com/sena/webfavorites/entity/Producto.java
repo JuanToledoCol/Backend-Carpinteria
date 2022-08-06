@@ -28,34 +28,28 @@ public class Producto{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idproducto")
+    @Column(name = "idProducto")
     private Long idProducto;
 
-    @JoinColumn(name = "idcategoria", referencedColumnName = "idcategoria")
+    @JoinColumn(name = "idCategoria", nullable = false, referencedColumnName = "idCategoria")
     @ManyToOne(optional = false)
     private Categoria idCategoria;
 
-    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
-    @ManyToOne(optional = false)
-    private Usuario idUsuario;
+    @Column(name = "nombreProducto", nullable = false, length = 100)
+    private String nombreProducto;
 
-    @Column(name = "nombre", nullable = false, length = 100)
-    private String nombre;
-
-    @Column(name = "cantidad", nullable = false)
-    private long cantidad;
+    @Column(name = "stock", nullable = false)
+    private int stock;
 
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
-    @Column(name = "imagen", nullable = false, length = 300)
-    private String imagen;
+    @Column(name = "precio", nullable = false, length = 300)
+    private Double precio;
 
-    @Column(name = "fechacreacion", nullable = false)
-    private LocalDate fechacreacion;
+    @Column(name = "fechaCreacionProducto", nullable = false)
+    private LocalDate fechaCreacionProducto;
 
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
-    //private List<RelProductoFavorito> listaRelProductosFavoritos;
 
 
 

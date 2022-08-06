@@ -1,11 +1,12 @@
 package com.sena.webfavorites.entity;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -20,25 +21,19 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "roles")
-public class Rol{
+@Table(name = "telefonosUsuarios")
+public class TelefonoUsuario{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idRol")
-    private Long idRol;
+    @Column(name = "idTelUsuario")
+    private Long idTelUsuario;
 
-    @Basic(optional = false)
-    @Column(name = "nombreRol", nullable = false, length = 100)
-    private String nombreRol;
+    @Column(name = "telefono", nullable = false, length = 200)
+    private String telefono;
 
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idRol")
-    //private List<Usuario> listaUsuarios;
+    @JoinColumn(name = "idUsuario", nullable = false, referencedColumnName = "idUsuario")
+    @ManyToOne(optional = false)
+    private Usuario idUsuario;
+
 }
-
-
-
-
-
-

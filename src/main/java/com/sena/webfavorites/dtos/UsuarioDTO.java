@@ -1,6 +1,7 @@
 package com.sena.webfavorites.dtos;
 
 import com.sena.webfavorites.entity.Rol;
+import com.sena.webfavorites.entity.TiposDocumentos;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -13,9 +14,11 @@ public class UsuarioDTO {
 
 	private Long idUsuario;
 	private Rol idRol;
-	private String nombre;
-	private String apellido;
+	private TiposDocumentos idTipoDocumento;
+	private String nombreUsuario;
+	private String apellidoUsuario;
 	private String correo;
 	private String usuario;
-	private String pass;
+	private String clave;
+	private int numeroDocumento;
 }

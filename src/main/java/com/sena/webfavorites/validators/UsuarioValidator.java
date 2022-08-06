@@ -6,7 +6,7 @@ import com.sena.webfavorites.exceptions.ValidateServiceException;
 public class UsuarioValidator {
 
 	public static void save(Usuario usuario) {
-		if(usuario.getNombre().trim().isEmpty() || usuario.getNombre() == null || usuario.getApellido().trim().isEmpty() || usuario.getApellido() == null){
+		if(usuario.getNombreUsuario().trim().isEmpty() || usuario.getNombreUsuario() == null || usuario.getApellidoUsuario().trim().isEmpty() || usuario.getApellidoUsuario() == null){
 			throw new ValidateServiceException("El nombre es obligatorio.");
 		}
 		if(usuario.getCorreo().trim().isEmpty() || usuario.getCorreo() == null){
@@ -15,7 +15,7 @@ public class UsuarioValidator {
 		if(usuario.getUsuario().trim().isEmpty() || usuario.getUsuario() == null){
 			throw new ValidateServiceException("El usuario es obligatorio.");
 		}
-		if(usuario.getPass().trim().isEmpty() || usuario.getPass() == null){
+		if(usuario.getClave().trim().isEmpty() || usuario.getClave() == null){
 			throw new ValidateServiceException("La contaseña es obligatorio.");
 		}
 	}
