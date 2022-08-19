@@ -34,6 +34,19 @@ public class ProductoService {
 			throw new GeneralServiceException(e.getMessage(), e);
 		}
 	}
+	
+	public List<Producto> findByCategoria(String nombreCategoria) {
+		try {
+			List<Producto> productoPorCategoria = produRepo.findByIdCategoriaNombreCategoria(nombreCategoria);
+			return productoPorCategoria;
+		} catch (NoDataFoundException | ValidateServiceException e) {
+			log.info(e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new GeneralServiceException(e.getMessage(), e);
+		}
+	}
 
 	public Producto findById(Long idProducto) {
 		try {
@@ -48,7 +61,7 @@ public class ProductoService {
 			throw new GeneralServiceException(e.getMessage(), e);
 		}
 	}
-
+	
 	@Transactional
 	public void delete(Long idProducto) {
 		try {
@@ -95,4 +108,6 @@ public class ProductoService {
 			throw new GeneralServiceException(e.getMessage(), e);
 		}
 	}
+	
+	
 }

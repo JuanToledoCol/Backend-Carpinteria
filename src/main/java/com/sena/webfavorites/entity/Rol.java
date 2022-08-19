@@ -32,9 +32,6 @@ public class Rol{
     @Basic(optional = false)
     @Column(name = "nombreRol", nullable = false, length = 100)
     private String nombreRol;
-
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idRol")
-    //private List<Usuario> listaUsuarios;
 }
 
 

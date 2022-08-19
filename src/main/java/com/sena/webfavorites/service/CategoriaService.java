@@ -68,6 +68,7 @@ public class CategoriaService {
 			CategoriaValidator.save(categoria);
 
 			if(categoria.getIdCategoria() == null) {
+				categoria.setUrlPagina("/"+categoria.getNombreCategoria());
 				Categoria categoriaN = cateRepo.save(categoria);
 				return categoriaN;
 			}
@@ -75,7 +76,10 @@ public class CategoriaService {
 			Categoria categoriaUp = cateRepo.findById(categoria.getIdCategoria()).orElseThrow(() -> new NoDataFoundException("La categoria no existe"));
 
 			categoriaUp.setNombreCategoria(categoria.getNombreCategoria());
-
+			categoriaUp.setUrlImagen(categoria.getUrlImagen());
+//			categoriaUp.setUrlPagina("/"+categoria.getNombreCategoria());
+			System.out.print(categoriaUp);
+			
 			cateRepo.save(categoriaUp);
 			return categoriaUp;
 		} catch (NoDataFoundException | ValidateServiceException e) {

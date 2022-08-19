@@ -1,7 +1,5 @@
 package com.sena.webfavorites.dtos;
 
-
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +14,7 @@ import lombok.Setter;
 public class CategoriaDTO {
 
 	private Long idCategoria;
-	 private String nombreCategoria;
-
-
+	private String nombreCategoria;
+	private String urlImagen;
+	private String urlPagina;
 }

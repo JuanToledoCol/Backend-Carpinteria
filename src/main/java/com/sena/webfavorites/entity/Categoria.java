@@ -32,4 +32,12 @@ public class Categoria{
 
     @Column(name = "nombreCategoria", nullable = false, length = 200)
 	private String nombreCategoria;
+    
+    @Column(name = "urlImagen", nullable = true, length = 200)
+	private String urlImagen;
+    
+    @Column(name = "urlPagina", nullable = true, length = 200)
+	private String urlPagina;
+    
+    
 }
