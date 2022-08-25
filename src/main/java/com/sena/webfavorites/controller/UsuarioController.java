@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sena.webfavorites.converters.UsuarioConv;
+import com.sena.webfavorites.dtos.LoginRequestDTO;
+import com.sena.webfavorites.dtos.LoginResponseDTO;
 import com.sena.webfavorites.dtos.UsuarioDTO;
 import com.sena.webfavorites.entity.Usuario;
 import com.sena.webfavorites.service.UsuarioService;
@@ -61,5 +63,17 @@ public class UsuarioController {
 		return new WrapperResponse<>(true, "Completado", usuarioDto).createResponse(HttpStatus.OK);
 
 	}
+	
+	@PostMapping(value = "/signup")
+	public ResponseEntity<WrapperResponse<UsuarioDTO>> signUp(@RequestBody UsuarioDTO usuario) {
+		Usuario usuarioN = usuServi.signUp(converter.toEntity(usuario));
+		UsuarioDTO usuarioDto = converter.toDTO(usuarioN);
+		return new WrapperResponse<>(true, "Completado", usuarioDto).createResponse(HttpStatus.CREATED);
+	}
 
+	@PostMapping(value = "/login")
+	public ResponseEntity<WrapperResponse<LoginResponseDTO>> login(@RequestBody LoginRequestDTO request) {
+		LoginResponseDTO response = usuServi.login(request);
+		return new WrapperResponse<>(true, "Completado", response).createResponse(HttpStatus.OK);
+	}
 }

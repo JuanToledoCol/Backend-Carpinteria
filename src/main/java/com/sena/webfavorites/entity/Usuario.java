@@ -44,28 +44,16 @@ public class Usuario{
     @Column(name = "apellidoUsuario", nullable = false, length = 200)
     private String apellidoUsuario;
 
-    @Column(name = "correo", nullable = false, length = 300)
+    @Column(name = "correo", nullable = false, length = 300, unique = true)
     private String correo;
 
-    @Column(name = "usuario", nullable = false, length = 40)
+    @Column(name = "usuario", nullable = false, length = 40, unique = true)
     private String usuario;
 
-    @Column(name = "clave", nullable = false, length = 100)
+    @Column(name = "clave", nullable = false, length = 200)
     private String clave;
 
-    @Column(name = "numeroDocumento", nullable = false, length = 20)
+    @Column(name = "numeroDocumento", nullable = false, length = 20, unique = true)
     private int numeroDocumento;
-
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    //private List<Compra> listaFavoritosUsuarios;
-
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
-    //private List<Compra> listaFavoritosClientes;
-
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    //private List<RelUsuarioPermiso> listaRelUsuariosPermisos;
-
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    //private List<Producto> listaProductos;
 
 }
