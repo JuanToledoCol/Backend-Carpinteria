@@ -147,7 +147,7 @@ public class UsuarioService {
 			Usuario usuario = usuRepo.findByusuario(request.getUsuario())
 					.orElseThrow(() -> new ValidateServiceException("El nombre o contraseña es invalido"));
 
-			if (!usuario.getClave().equals(request.getClave())) {
+			if (validatePass(usuario, request.getClave()) == false) {
 				throw new ValidateServiceException("El nombre o contraseña es invalido");
 			}
 			
@@ -202,10 +202,14 @@ public class UsuarioService {
 	}
 	
 	private Usuario EncoderPass(Usuario usuario) {
-		BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
-		String pass = passEncoder.encode(usuario.getClave());
-		usuario.setClave(pass);
+		BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder(16);
+		usuario.setClave(passEncoder.encode(usuario.getClave())) ;
 		return usuario;
+	}
+	
+	private boolean validatePass(Usuario usuario, String request) {
+		BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
+		return passEncoder.matches(request, usuario.getClave());
 	}
 
 }
