@@ -34,7 +34,7 @@ public class ProductoService {
 			throw new GeneralServiceException(e.getMessage(), e);
 		}
 	}
-	
+
 	public List<Producto> findByCategoria(String nombreCategoria) {
 		try {
 			List<Producto> productoPorCategoria = produRepo.findByIdCategoriaNombreCategoria(nombreCategoria);
@@ -61,7 +61,7 @@ public class ProductoService {
 			throw new GeneralServiceException(e.getMessage(), e);
 		}
 	}
-	
+
 	@Transactional
 	public void delete(Long idProducto) {
 		try {
@@ -108,6 +108,6 @@ public class ProductoService {
 			throw new GeneralServiceException(e.getMessage(), e);
 		}
 	}
-	
-	
+
+
 }

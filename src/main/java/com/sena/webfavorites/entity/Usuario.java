@@ -30,7 +30,7 @@ public class Usuario{
     @Column(name = "idUsuario")
     private Long idUsuario;
 
-    @JoinColumn(name = "idRol", nullable = false, referencedColumnName = "idRol")
+    @JoinColumn(name = "idRol", nullable = true, referencedColumnName = "idRol")
     @ManyToOne(optional = false)
     private Rol idRol;
 

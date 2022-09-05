@@ -27,14 +27,14 @@ public class ProductoController {
 	private ProductoService produService;
 	private ProductoConv converter = new ProductoConv();
 
-	@CrossOrigin(origins = "http://localhost:3000")
+
 	@GetMapping(value = "/producto")
 	public ResponseEntity<WrapperResponse<List<ProductoDTO>>> findAll() {
 		List<Producto> productos = produService.findAll();
 		List<ProductoDTO> productoDto = converter.toDTO(productos);
 		return new WrapperResponse<>(true, "Completado", productoDto).createResponse(HttpStatus.OK);
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(value = "/productoc/{nombreCategoria}")
 	public ResponseEntity<WrapperResponse<List<ProductoDTO>>> findByCategoria(@PathVariable("nombreCategoria") String nombreCategoria) {
@@ -49,7 +49,7 @@ public class ProductoController {
 		ProductoDTO productoDto = converter.toDTO(producto);
 		return new WrapperResponse<>(true, "Completado", productoDto).createResponse(HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping(value = "/producto/{idProducto}")
 	public ResponseEntity<?> delete(@PathVariable("idProducto") Long idProducto) {
 		produService.delete(idProducto);

@@ -147,13 +147,13 @@ public class UsuarioService {
 			Usuario usuario = usuRepo.findByusuario(request.getUsuario())
 					.orElseThrow(() -> new ValidateServiceException("El nombre o contraseña es invalido"));
 
-			if (validatePass(usuario, request.getClave()) == false) {
+			if (!validatePass(usuario, request.getClave())) {
 				throw new ValidateServiceException("El nombre o contraseña es invalido");
 			}
-			
+
 			String token = generateToken(usuario);
 			return new LoginResponseDTO(converter.toDTO(usuario), token);
-			
+
 		} catch (NoDataFoundException | ValidateServiceException e) {
 			log.info(e.getMessage(), e);
 			throw e;
@@ -190,7 +190,7 @@ public class UsuarioService {
 		}
 		return false;
 	}
-	
+
 	public String getUsuarioFromJwt(String jwt) {
 		try {
 			return Jwts.parser().setSigningKey(keySecret).parseClaimsJws(jwt).getBody().getSubject();
@@ -200,13 +200,13 @@ public class UsuarioService {
 			throw new ValidateServiceException("El token es inavalido");
 		}
 	}
-	
+
 	private Usuario EncoderPass(Usuario usuario) {
 		BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder(16);
 		usuario.setClave(passEncoder.encode(usuario.getClave())) ;
 		return usuario;
 	}
-	
+
 	private boolean validatePass(Usuario usuario, String request) {
 		BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
 		return passEncoder.matches(request, usuario.getClave());

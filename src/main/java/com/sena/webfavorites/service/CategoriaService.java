@@ -79,7 +79,7 @@ public class CategoriaService {
 			categoriaUp.setUrlImagen(categoria.getUrlImagen());
 //			categoriaUp.setUrlPagina("/"+categoria.getNombreCategoria());
 			System.out.print(categoriaUp);
-			
+
 			cateRepo.save(categoriaUp);
 			return categoriaUp;
 		} catch (NoDataFoundException | ValidateServiceException e) {

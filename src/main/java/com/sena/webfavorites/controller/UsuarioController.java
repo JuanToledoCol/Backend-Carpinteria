@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import com.sena.webfavorites.utils.WrapperResponse;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 public class UsuarioController {
 
 	@Autowired
@@ -63,17 +65,17 @@ public class UsuarioController {
 		return new WrapperResponse<>(true, "Completado", usuarioDto).createResponse(HttpStatus.OK);
 
 	}
-	
+
 	@PostMapping(value = "/signup")
 	public ResponseEntity<WrapperResponse<UsuarioDTO>> signUp(@RequestBody UsuarioDTO usuario) {
 		Usuario usuarioN = usuServi.signUp(converter.toEntity(usuario));
 		UsuarioDTO usuarioDto = converter.toDTO(usuarioN);
-		return new WrapperResponse<>(true, "Completado", usuarioDto).createResponse(HttpStatus.CREATED);
+		return new WrapperResponse<>(true, "El registro ha sido exitoso.", usuarioDto).createResponse(HttpStatus.CREATED);
 	}
 
 	@PostMapping(value = "/login")
 	public ResponseEntity<WrapperResponse<LoginResponseDTO>> login(@RequestBody LoginRequestDTO request) {
 		LoginResponseDTO response = usuServi.login(request);
-		return new WrapperResponse<>(true, "Completado", response).createResponse(HttpStatus.OK);
+		return new WrapperResponse<>(true, "Ingreso exitoso", response).createResponse(HttpStatus.OK);
 	}
 }

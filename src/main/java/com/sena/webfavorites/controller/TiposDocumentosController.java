@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ public class TiposDocumentosController {
 	private TiposDocumentosService tdServi;
 	private TiposDocumentosConv converter = new TiposDocumentosConv();
 
+	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(value = "/tiposDocumentos")
 	public ResponseEntity<WrapperResponse<List<TiposDocumentosDTO>>> findAll() {
 		List<TiposDocumentos> td = tdServi.findAll();
