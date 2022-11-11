@@ -40,7 +40,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 					"/login",
 					"/signup",
 					"/producto",
-					"/productoc/?",
+					"/producto/**",
+					"/productoc/**",
 					"/categoria",
 					"/tiposDocumentos",
 					"/registro"

@@ -19,7 +19,7 @@ import com.sena.webfavorites.dtos.ProductoDTO;
 import com.sena.webfavorites.entity.Producto;
 import com.sena.webfavorites.service.ProductoService;
 import com.sena.webfavorites.utils.WrapperResponse;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class ProductoController {
 
@@ -35,7 +35,6 @@ public class ProductoController {
 		return new WrapperResponse<>(true, "Completado", productoDto).createResponse(HttpStatus.OK);
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(value = "/productoc/{nombreCategoria}")
 	public ResponseEntity<WrapperResponse<List<ProductoDTO>>> findByCategoria(@PathVariable("nombreCategoria") String nombreCategoria) {
 		List<Producto> productoPorCategoria = produService.findByCategoria(nombreCategoria);

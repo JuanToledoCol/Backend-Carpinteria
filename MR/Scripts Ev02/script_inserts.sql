@@ -25,7 +25,7 @@ VALUES ('avenida01 #4-18',1),('avenida02 #3-12',2),
 /* Tabla Categoria*/
 INSERT INTO categorias (nombre_categoria, url_pagina) 
 VALUES ('muebles','/muebles'),('comedores','/comedores'),('armarios','/armarios'),('salas','/salas'),('cocinas','/cocinas'),
-('baños','/baños'),('cunas','/cunas'),('escritorios','/escritorios');
+('banos','/banos'),('cunas','/cunas'),('escritorios','/escritorios');
 
 /* Tabla Productos*/
 INSERT INTO productos (descripcion, nombre_producto, precio, stock, id_categoria, fecha_creacion_producto)

@@ -19,7 +19,7 @@ import com.sena.webfavorites.dtos.CategoriaDTO;
 import com.sena.webfavorites.entity.Categoria;
 import com.sena.webfavorites.service.CategoriaService;
 import com.sena.webfavorites.utils.WrapperResponse;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class CategoriaController {
 
@@ -27,7 +27,6 @@ public class CategoriaController {
 	private CategoriaService cateService;
 	private CategoriaConv converter = new CategoriaConv();
 
-	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(value ="/categoria")
 	public ResponseEntity<WrapperResponse<List<CategoriaDTO>>> findAll(){
 		List<Categoria> categorias = cateService.findAll();

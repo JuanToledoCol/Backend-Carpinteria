@@ -22,9 +22,8 @@ import com.sena.webfavorites.entity.Usuario;
 import com.sena.webfavorites.service.UsuarioService;
 import com.sena.webfavorites.utils.WrapperResponse;
 
-
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UsuarioController {
 
 	@Autowired
